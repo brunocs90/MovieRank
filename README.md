@@ -16,10 +16,13 @@
 
 ## 🚀 Projeto
 
+O MovieRank é um projeto que visa demonstrar o uso do Amazon DynamoDB como um banco de dados NoSQL gerenciado na AWS, juntamente com o .NET Core 6. Ele apresenta três modelos diferentes de acesso aos dados no DynamoDB:
 
-MovieRank é um projeto de exemplo que demonstra o uso do DynamoDB na AWS em conjunto com o .NET Core 6.
-O projeto apresenta três modelos diferentes de acesso aos dados no DynamoDB: Object Persistence Model, Document Model e Low Level Model.
+- **Object Persistence Model**: nesse modelo, é utilizada uma biblioteca chamada DynamoDBContext, que permite que os desenvolvedores interajam com o DynamoDB por meio de classes de modelo fortemente tipadas.
+- **Document Model**: nesse modelo, os dados são armazenados como documentos JSON e acessados através da API DocumentModel, que mapeia esses documentos para objetos do .NET Core 6.
+- **Low Level Model**: nesse modelo, o acesso ao DynamoDB é feito de forma mais direta, utilizando-se da classe AmazonDynamoDBClient e do pacote AWSSDK.DynamoDBv2.
 
+O MovieRank também é um projeto completo, que inclui uma API RESTful desenvolvida com o ASP.NET Core 6 e documentada com o Swagger/OpenAPI, além de testes unitários utilizando o xUnit e a biblioteca de mocking Moq. A estrutura do projeto segue as melhores práticas do desenvolvimento em camadas, dividindo-o em Controllers, Contracts, Libs, Models, Repositories e Services.
 
 ## 💻 Tecnologias
 
@@ -41,7 +44,7 @@ Para executar este projeto, é necessário ter uma conta na AWS e configurar sua
 Ao executar o projeto, a API RESTful ficará disponível para uso em `http://localhost:5000` ou `https://localhost:5001` (se habilitado).
 Os endpoints da API estão documentados e podem ser acessados através do Swagger em `http://localhost:5000/swagger/index.html`.
 
-## 🏗️ Estrutura
+## 📁 Estrutura
 
 O projeto está dividido em diferentes camadas:
 
