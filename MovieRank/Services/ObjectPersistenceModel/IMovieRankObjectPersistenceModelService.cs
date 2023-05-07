@@ -1,8 +1,8 @@
 ﻿using MovieRank.Contracts;
 
-namespace MovieRank.Services
+namespace MovieRank.Services.ObjectPersistenceModel
 {
-    public interface IMovieRankService
+    public interface IMovieRankObjectPersistenceModelService
     {
         Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase();
 

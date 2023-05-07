@@ -1,8 +1,8 @@
 ﻿using MovieRank.Libs.Models;
 
-namespace MovieRank.Libs.Repositories
+namespace MovieRank.Libs.Repositories.ObjectPersistenceModel
 {
-    public interface IMovieRankRepository
+    public interface IMovieRankObjectPersistenceModelRepository
     {
         Task<IEnumerable<MovieDb>> GetAllItems();
 

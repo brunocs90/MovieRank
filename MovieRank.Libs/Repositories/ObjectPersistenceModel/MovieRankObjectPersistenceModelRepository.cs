@@ -3,13 +3,13 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using MovieRank.Libs.Models;
 
-namespace MovieRank.Libs.Repositories
+namespace MovieRank.Libs.Repositories.ObjectPersistenceModel
 {
-    public class MovieRankRepository : IMovieRankRepository
+    public class MovieRankObjectPersistenceModelRepository : IMovieRankObjectPersistenceModelRepository
     {
         private readonly DynamoDBContext _context;
 
-        public MovieRankRepository(IAmazonDynamoDB dynamoDbClient)
+        public MovieRankObjectPersistenceModelRepository(IAmazonDynamoDB dynamoDbClient)
         {
             _context = new DynamoDBContext(dynamoDbClient);
         }

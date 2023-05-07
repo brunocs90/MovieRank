@@ -1,25 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieRank.Contracts;
-using MovieRank.Services;
+using MovieRank.Services.ObjectPersistenceModel;
 
-namespace MovieRank.Controllers
+namespace MovieRank.Controllers.ObjectPersistenceModel
 {
 
-    [Route("movies")]
-    public class MovieController : Controller
+    [Route("moviesObjectPersistenceModel")]
+    public class MovieObjectPersistenceModelController : Controller
     {
 
-        private readonly IMovieRankService _movieRankService;
+        private readonly IMovieRankObjectPersistenceModelService _movieRankObjectPersistenceModelService;
 
-        public MovieController(IMovieRankService movieRankService)
+        public MovieObjectPersistenceModelController(IMovieRankObjectPersistenceModelService movieRankObjectPersistenceModelService)
         {
-            _movieRankService = movieRankService;
+            _movieRankObjectPersistenceModelService = movieRankObjectPersistenceModelService;
         }
 
         [HttpGet]
         public async Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase()
         {
-            var results = await _movieRankService.GetAllItemsFromDatabase();
+            var results = await _movieRankObjectPersistenceModelService.GetAllItemsFromDatabase();
 
             return results;
         }
@@ -28,7 +28,7 @@ namespace MovieRank.Controllers
         [Route("{userId}/{movieName}")]
         public async Task<MovieResponse> GetMovie(int userId, string movieName)
         {
-            var result = await _movieRankService.GetMovie(userId, movieName);
+            var result = await _movieRankObjectPersistenceModelService.GetMovie(userId, movieName);
 
             return result;
         }
@@ -37,7 +37,7 @@ namespace MovieRank.Controllers
         [Route("user/{userId}/rankedMovies/{movieName}")]
         public async Task<IEnumerable<MovieResponse>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
         {
-            var results = await _movieRankService.GetUsersRankedMoviesByMovieTitle(userId, movieName);
+            var results = await _movieRankObjectPersistenceModelService.GetUsersRankedMoviesByMovieTitle(userId, movieName);
 
             return results;
         }
@@ -46,7 +46,7 @@ namespace MovieRank.Controllers
         [Route("{userId}")]
         public async Task<IActionResult> AddMovie(int userId, [FromBody] MovieRankRequest movieRankRequest)
         {
-            await _movieRankService.AddMovie(userId, movieRankRequest);
+            await _movieRankObjectPersistenceModelService.AddMovie(userId, movieRankRequest);
 
             return Ok();
         }
@@ -55,7 +55,7 @@ namespace MovieRank.Controllers
         [Route("{userId}")]
         public async Task<IActionResult> UpdateMovie(int userId, [FromBody] MovieUpdateRequest request)
         {
-            await _movieRankService.UpdateMovie(userId, request);
+            await _movieRankObjectPersistenceModelService.UpdateMovie(userId, request);
 
             return Ok();
         }
@@ -64,7 +64,7 @@ namespace MovieRank.Controllers
         [Route("{movieName}/ranking")]
         public async Task<MovieRankResponse> GetMoviesRanking(string movieName)
         {
-            var result = await _movieRankService.GetMovieRank(movieName);
+            var result = await _movieRankObjectPersistenceModelService.GetMovieRank(movieName);
 
             return result;
         }

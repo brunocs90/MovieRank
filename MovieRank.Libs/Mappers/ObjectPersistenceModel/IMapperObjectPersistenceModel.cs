@@ -1,9 +1,9 @@
 ﻿using MovieRank.Contracts;
 using MovieRank.Libs.Models;
 
-namespace MovieRank.Libs.Mappers
+namespace MovieRank.Libs.Mappers.ObjectPersistenceModel
 {
-    public interface IMapper
+    public interface IMapperObjectPersistenceModel
     {
         IEnumerable<MovieResponse> ToMovieContract(IEnumerable<MovieDb> items);
 
