@@ -2,62 +2,61 @@
   <span>MovieRank</span>
 </h1>
 <p align="center">
-  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-configuração">Configuração</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-estrutura">Estrutura</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-licença">Licença</a>
+  <a href="#-project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-settings">Settings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-structure">Structure</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-license">License</a>
 </p>
 <br>
 <p align="center">
   <img alt="layout" src="./images/architecture.png" width="80%">
 </p>
 
-## 🚀 Projeto
+## 🚀 Project
 
-O MovieRank é um projeto que visa demonstrar o uso do Amazon DynamoDB como um banco de dados NoSQL gerenciado na AWS, juntamente com o .NET Core 6. Ele apresenta três modelos diferentes de acesso aos dados no DynamoDB:
+MovieRank is a project that aims to demonstrate the use of Amazon DynamoDB as a managed NoSQL database on AWS, along with .NET Core 6. It presents three different data access models for DynamoDB:
 
-- **Object Persistence Model**: nesse modelo, é utilizada uma biblioteca chamada DynamoDBContext, que permite que os desenvolvedores interajam com o DynamoDB por meio de classes de modelo fortemente tipadas.
-- **Document Model**: nesse modelo, os dados são armazenados como documentos JSON e acessados através da API DocumentModel, que mapeia esses documentos para objetos do .NET Core 6.
-- **Low Level Model**: nesse modelo, o acesso ao DynamoDB é feito de forma mais direta, utilizando-se da classe AmazonDynamoDBClient e do pacote AWSSDK.DynamoDBv2.
+- **Object Persistence Model**: in this model, a library called DynamoDBContext is used, which allows developers to interact with DynamoDB through strongly-typed model classes.
+- **Document Model**: in this model, data is stored as JSON documents and accessed through the DocumentModel API, which maps these documents to .NET Core 6 objects.
+- **Low Level Model**: in this model, access to DynamoDB is more direct, using the AmazonDynamoDBClient class and the AWSSDK.DynamoDBv2 package.
 
-O MovieRank também é um projeto completo, que inclui uma API RESTful desenvolvida com o ASP.NET Core 6 e documentada com o Swagger/OpenAPI, além de testes unitários utilizando o xUnit e a biblioteca de mocking Moq. A estrutura do projeto segue as melhores práticas do desenvolvimento em camadas, dividindo-o em Controllers, Contracts, Libs, Models, Repositories e Services.
+MovieRank is also a complete project, including a RESTful API developed with ASP.NET Core 6 and documented with Swagger/OpenAPI, as well as unit tests using xUnit and the Moq mocking library. The project structure follows best practices of layered development, dividing it into Controllers, Contracts, Libs, Models, Repositories, and Services.
 
-## 💻 Tecnologias
+## 💻 Technologies
 
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+This project was developed with the following technologies:
 
-- .NET Core 6.0: plataforma de desenvolvimento de software livre e multiplataforma, utilizada para criar aplicativos modernos para a Web, desktop e dispositivos móveis.
-- Amazon DynamoDB: um serviço de banco de dados NoSQL gerenciado oferecido pela Amazon Web Services (AWS).
-- Entity Framework Core: um framework ORM (Object-Relational Mapping) que permite o acesso a bancos de dados relacionais por meio de objetos e classes do C#.
-- Swashbuckle.AspNetCore: um pacote para geração automática de documentação do Swagger/OpenAPI para APIs ASP.NET Core.
-- Moq: uma biblioteca de mocking para testes unitários em .NET.
-- xUnit: um framework de teste unitário para .NET Core.
-- FluentAssertions: uma biblioteca para escrever testes mais expressivos em .NET.
-- AWS SDK for .NET: uma biblioteca para interagir com serviços da AWS na plataforma .NET.
+- .NET Core 6.0: a free, open-source, and cross-platform software development platform used to create modern applications for the web, desktop, and mobile devices.
+- Amazon DynamoDB: a managed NoSQL database service offered by Amazon Web Services (AWS).
+- Entity Framework Core: an ORM (Object-Relational Mapping) framework that allows access to relational databases through C# objects and classes.
+- Swashbuckle.AspNetCore: a package for automatic generation of Swagger/OpenAPI documentation for ASP.NET Core APIs.
+- Moq: a mocking library for unit testing in .NET.
+- xUnit: a unit testing framework for .NET Core.
+- FluentAssertions: a library for writing more expressive tests in .NET.
+- AWS SDK for .NET: a library for interacting with AWS services on the .NET platform.
 
-## 📥 Configuração
+## 📥 Settings
 
-Para executar este projeto, é necessário ter uma conta na AWS e configurar suas credenciais no arquivo `appsettings.json`. Além disso, é necessário ter o SDK do .NET Core 6 instalado em sua máquina.
+To run this project, it is necessary to have an AWS account and configure your credentials in the `appsettings.json` file. In addition, it is necessary to have the .NET Core 6 SDK installed on your machine.
 
-Ao executar o projeto, a API RESTful ficará disponível para uso em `http://localhost:5000` ou `https://localhost:5001` (se habilitado).
-Os endpoints da API estão documentados e podem ser acessados através do Swagger em `http://localhost:5000/swagger/index.html`.
+When running the project, the RESTful API will be available for use at `http://localhost:5000` or `https://localhost:5001` (if enabled). The API endpoints are documented and can be accessed through Swagger at `http://localhost:5000/swagger/index.html`.
 
-## 📁 Estrutura
+## 📁 Structure
 
-O projeto está dividido em diferentes camadas:
+The project is divided into different layers:
 
-- **Controllers**: camada responsável por lidar com as requisições HTTP e retornar as respostas adequadas. Nesse caso, as requisições são feitas para a API RESTful.
-- **Contracts**: camada que define os contratos da API. Esses contratos são especificações de como os endpoints devem ser definidos e acessados.
-- **Libs**: camada que contém as implementações de serviços e mappers que serão utilizados pelos controllers. Esses serviços e mappers ajudam a processar as informações vindas dos endpoints e prepará-las para serem armazenadas no DynamoDB.
-- **Models**: camada que define os modelos de dados utilizados no projeto. Esses modelos de dados são mapeados para as tabelas do DynamoDB e ajudam a estruturar os dados armazenados.
-- **Repositories**: camada que contém as implementações das classes responsáveis por lidar diretamente com o DynamoDB. Essas classes realizam as operações de leitura e escrita nos dados armazenados no banco.
-- **Services**: camada que contém as interfaces e implementações dos serviços utilizados pelos controllers. Esses serviços executam a lógica de negócio e interagem com os repositórios para obter ou armazenar informações no banco.
+- **Controllers**: the layer responsible for handling HTTP requests and returning the appropriate responses. In this case, requests are made to the RESTful API.
+- **Contracts**: the layer that defines the API contracts. These contracts are specifications of how endpoints should be defined and accessed.
+- **Libs**: the layer that contains implementations of services and mappers that will be used by the controllers. These services and mappers help process information coming from the endpoints and prepare them to be stored in DynamoDB.
+- **Models**: the layer that defines the data models used in the project. These data models are mapped to DynamoDB tables and help structure the stored data.
+- **Repositories**: the layer that contains the implementations of the classes responsible for dealing directly with DynamoDB. These classes perform read and write operations on the data stored in the database.
+- **Services**: the layer that contains the interfaces and implementations of the services used by the controllers. These services execute the business logic and interact with the repositories to retrieve or store information in the database.
 
-## 📝 Licença
+## 📝 License
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+This project is licensed under the MIT license. See the [LICENSE](LICENSE.md) file for more details.
 
 ---
 
-**Desenvolvido por [Bruno César](https://github.com/brunocs90).**
+**Developed by [Bruno César](https://github.com/brunocs90).**
