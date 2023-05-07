@@ -40,6 +40,30 @@ This project was developed with the following technologies:
 
 To run this project, it is necessary to have an AWS account and configure your credentials in the `appsettings.json` file. In addition, it is necessary to have the .NET Core 6 SDK installed on your machine.
 
+Table Example: 
+
+| UserId | MovieName |                           Description                           |                 Actors                 |    RankedDateTime    | Ranking |
+|:------:|:---------:|:---------------------------------------------------------------:|:--------------------------------------:|:--------------------:|:-------:|
+|    3   | Fast Draw | When speed is the winner, who will win this fast draw challenge | Daniel Donbavand, Kirsty Donbavand | 5/5/2023 12:31:42 AM |    9    |
+
+Json Example: 
+
+```json
+[ 
+  {
+    "UserId": 3,
+    "MovieName": "Fast Draw",
+    "Actors": [
+      "Daniel Donbavand",
+      "Kirsty Donbavand"
+    ],
+    "Description": "When speed is the winner, who will win this fast draw challenge",
+    "RankedDateTime": "5/5/2023 12:31:42 AM",
+    "Ranking": 9
+  }
+]
+```
+
 When running the project, the RESTful API will be available for use at `http://localhost:5000` or `https://localhost:5001` (if enabled). The API endpoints are documented and can be accessed through Swagger at `http://localhost:5000/swagger/index.html`.
 
 ## 📁 Structure
