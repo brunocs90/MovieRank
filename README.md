@@ -10,7 +10,7 @@
 </p>
 <br>
 <p align="center">
-  <img alt="layout" src="./images/layout.png" width="80%">
+  <img alt="layout" src="./images/layout1.png" width="80%">
 </p>
 
 ## 🚀 Projeto
