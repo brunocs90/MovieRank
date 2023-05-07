@@ -9,10 +9,6 @@
   <a href="#-licença">Licença</a>
 </p>
 <br>
-<p align="center">
-  <img alt="layout" src="./images/layout.gif" width="100%">
-</p>
-<br>
 
 ## 🚀 Projeto
 
@@ -48,12 +44,12 @@ Os endpoints da API estão documentados e podem ser acessados através do Swagge
 
 O projeto está dividido em diferentes camadas:
 
-- **Controllers**: camada responsável por lidar com as requisições HTTP e retornar as respostas adequadas.
-- **Contracts**: camada que define os contratos da API.
-- **Libs**: camada que contém as implementações de serviços e mappers que serão utilizados pelos controllers.
-- **Models**: camada que define os modelos de dados utilizados no projeto.
-- **Repositories**: camada que contém as implementações das classes responsáveis por lidar diretamente com o DynamoDB.
-- **Services**: camada que contém as interfaces e implementações dos serviços utilizados pelos controllers.
+- **Controllers**: camada responsável por lidar com as requisições HTTP e retornar as respostas adequadas. Nesse caso, as requisições são feitas para a API RESTful.
+- **Contracts**: camada que define os contratos da API. Esses contratos são especificações de como os endpoints devem ser definidos e acessados.
+- **Libs**: camada que contém as implementações de serviços e mappers que serão utilizados pelos controllers. Esses serviços e mappers ajudam a processar as informações vindas dos endpoints e prepará-las para serem armazenadas no DynamoDB.
+- **Models**: camada que define os modelos de dados utilizados no projeto. Esses modelos de dados são mapeados para as tabelas do DynamoDB e ajudam a estruturar os dados armazenados.
+- **Repositories**: camada que contém as implementações das classes responsáveis por lidar diretamente com o DynamoDB. Essas classes realizam as operações de leitura e escrita nos dados armazenados no banco.
+- **Services**: camada que contém as interfaces e implementações dos serviços utilizados pelos controllers. Esses serviços executam a lógica de negócio e interagem com os repositórios para obter ou armazenar informações no banco.
 
 ## 📝 Licença
 
