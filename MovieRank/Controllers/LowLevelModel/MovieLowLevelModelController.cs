@@ -1,25 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieRank.Contracts;
-using MovieRank.Services.DocumentModel;
+using MovieRank.Services.LowLevelModel;
 
-namespace MovieRank.Controllers.DocumentModel
+namespace MovieRank.Controllers.LowLevelModel
 {
 
-    [Route("moviesDocumentModel")]
-    public class MovieDocumentModelController : Controller
+    [Route("moviesLowLevelModel")]
+    public class MovieLowLevelModelController : Controller
     {
 
-        private readonly IMovieRankDocumentModelService _movieRankDocumentModelService;
+        private readonly IMovieRankLowLevelModelService _movieRankLowLevelModelService;
 
-        public MovieDocumentModelController(IMovieRankDocumentModelService movieRankDocumentModelService)
+        public MovieLowLevelModelController(IMovieRankLowLevelModelService movieRankLowLevelModelService)
         {
-            _movieRankDocumentModelService = movieRankDocumentModelService;
+            _movieRankLowLevelModelService = movieRankLowLevelModelService;
         }
 
         [HttpGet]
         public async Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase()
         {
-            var results = await _movieRankDocumentModelService.GetAllItemsFromDatabase();
+            var results = await _movieRankLowLevelModelService.GetAllItemsFromDatabase();
 
             return results;
         }
@@ -28,7 +28,7 @@ namespace MovieRank.Controllers.DocumentModel
         [Route("{userId}/{movieName}")]
         public async Task<MovieResponse> GetMovie(int userId, string movieName)
         {
-            var result = await _movieRankDocumentModelService.GetMovie(userId, movieName);
+            var result = await _movieRankLowLevelModelService.GetMovie(userId, movieName);
 
             return result;
         }
@@ -37,7 +37,7 @@ namespace MovieRank.Controllers.DocumentModel
         [Route("user/{userId}/rankedMovies/{movieName}")]
         public async Task<IEnumerable<MovieResponse>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
         {
-            var results = await _movieRankDocumentModelService.GetUsersRankedMoviesByMovieTitle(userId, movieName);
+            var results = await _movieRankLowLevelModelService.GetUsersRankedMoviesByMovieTitle(userId, movieName);
 
             return results;
         }
@@ -46,7 +46,7 @@ namespace MovieRank.Controllers.DocumentModel
         [Route("{userId}")]
         public async Task<IActionResult> AddMovie(int userId, [FromBody] MovieRankRequest movieRankRequest)
         {
-            await _movieRankDocumentModelService.AddMovie(userId, movieRankRequest);
+            await _movieRankLowLevelModelService.AddMovie(userId, movieRankRequest);
 
             return Ok();
         }
@@ -55,7 +55,7 @@ namespace MovieRank.Controllers.DocumentModel
         [Route("{userId}")]
         public async Task<IActionResult> UpdateMovie(int userId, [FromBody] MovieUpdateRequest request)
         {
-            await _movieRankDocumentModelService.UpdateMovie(userId, request);
+            await _movieRankLowLevelModelService.UpdateMovie(userId, request);
 
             return Ok();
         }
@@ -64,7 +64,7 @@ namespace MovieRank.Controllers.DocumentModel
         [Route("{movieName}/ranking")]
         public async Task<MovieRankResponse> GetMoviesRanking(string movieName)
         {
-            var result = await _movieRankDocumentModelService.GetMovieRank(movieName);
+            var result = await _movieRankLowLevelModelService.GetMovieRank(movieName);
 
             return result;
         }

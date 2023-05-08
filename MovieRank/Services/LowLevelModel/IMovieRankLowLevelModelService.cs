@@ -1,8 +1,8 @@
 ﻿using MovieRank.Contracts;
 
-namespace MovieRank.Services.DocumentModel
+namespace MovieRank.Services.LowLevelModel
 {
-    public interface IMovieRankDocumentModelService
+    public interface IMovieRankLowLevelModelService
     {
         Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase();
 

@@ -1,15 +1,15 @@
 ﻿using MovieRank.Contracts;
 using MovieRank.Libs.Mappers.DocumentModel;
-using MovieRank.Libs.Repositories.DocumentModel;
+using MovieRank.Libs.Repositories.LowLevelModel;
 
-namespace MovieRank.Services.DocumentModel
+namespace MovieRank.Services.LowLevelModel
 {
-    public class MovieRankDocumentModelService : IMovieRankDocumentModelService
+    public class MovieRankLowLevelModelService : IMovieRankLowLevelModelService
     {
-        private readonly IMovieRankDocumentModelRepository _movieRankDocumentModelRepository;
+        private readonly IMovieRankLowLevelModelRepository _movieRankDocumentModelRepository;
         private readonly IMapperDocumentModel _mapperDocumentModel;
 
-        public MovieRankDocumentModelService(IMovieRankDocumentModelRepository movieRankDocumentModelRepository, IMapperDocumentModel mapDocumentModel)
+        public MovieRankLowLevelModelService(IMovieRankLowLevelModelRepository movieRankDocumentModelRepository, IMapperDocumentModel mapDocumentModel)
         {
             _movieRankDocumentModelRepository = movieRankDocumentModelRepository;
             _mapperDocumentModel = mapDocumentModel;
