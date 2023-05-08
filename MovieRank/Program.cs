@@ -40,6 +40,7 @@ builder.Services.AddSingleton<IMapperDocumentModel, MapperDocumentModel>();
 builder.Services.AddSingleton<IMovieRankLowLevelModelService, MovieRankLowLevelModelService>();
 builder.Services.AddSingleton<IMovieRankLowLevelModelRepository, MovieRankLowLevelModelRepository>();
 builder.Services.AddSingleton<IMapperLowLevelModel, MapperLowLevelModel>();
+builder.Services.AddSingleton<ISetupService, SetupService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
