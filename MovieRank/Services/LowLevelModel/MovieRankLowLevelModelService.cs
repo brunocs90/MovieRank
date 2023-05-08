@@ -1,5 +1,5 @@
 ﻿using MovieRank.Contracts;
-using MovieRank.Libs.Mappers.DocumentModel;
+using MovieRank.Libs.Mappers.LowLevelModel;
 using MovieRank.Libs.Repositories.LowLevelModel;
 
 namespace MovieRank.Services.LowLevelModel
@@ -7,56 +7,50 @@ namespace MovieRank.Services.LowLevelModel
     public class MovieRankLowLevelModelService : IMovieRankLowLevelModelService
     {
         private readonly IMovieRankLowLevelModelRepository _movieRankDocumentModelRepository;
-        private readonly IMapperDocumentModel _mapperDocumentModel;
+        private readonly IMapperLowLevelModel _mapperLowLevelModel;
 
-        public MovieRankLowLevelModelService(IMovieRankLowLevelModelRepository movieRankDocumentModelRepository, IMapperDocumentModel mapDocumentModel)
+        public MovieRankLowLevelModelService(IMovieRankLowLevelModelRepository movieRankDocumentModelRepository, IMapperLowLevelModel mapLowLevelModel)
         {
             _movieRankDocumentModelRepository = movieRankDocumentModelRepository;
-            _mapperDocumentModel = mapDocumentModel;
+            _mapperLowLevelModel = mapLowLevelModel;
         }
 
         public async Task<IEnumerable<MovieResponse>> GetAllItemsFromDatabase()
         {
             var response = await _movieRankDocumentModelRepository.GetAllItems();
 
-            return _mapperDocumentModel.ToMovieContract(response);
+            return _mapperLowLevelModel.ToMovieContract(response);
         }
 
         public async Task<MovieResponse> GetMovie(int userId, string movieName)
         {
             var response = await _movieRankDocumentModelRepository.GetMovie(userId, movieName);
 
-            return _mapperDocumentModel.ToMovieContract(response);
+            return _mapperLowLevelModel.ToMovieContract(response);
         }
 
         public async Task<IEnumerable<MovieResponse>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName)
         {
             var response = await _movieRankDocumentModelRepository.GetUsersRankedMoviesByMovieTitle(userId, movieName);
 
-            return _mapperDocumentModel.ToMovieContract(response);
+            return _mapperLowLevelModel.ToMovieContract(response);
         }
 
-        public async Task AddMovie(int userId, MovieRankRequest addRequest)
+        public async Task AddMovie(int userId, MovieRankRequest movieRankRequest)
         {
-            var documentModel = _mapperDocumentModel.ToDocumentModel(userId, addRequest);
-
-            await _movieRankDocumentModelRepository.AddMovie(documentModel);
+            await _movieRankDocumentModelRepository.AddMovie(userId, movieRankRequest);
         }
 
-        public async Task UpdateMovie(int userId, MovieUpdateRequest movieUpdateRequest)
+        public async Task UpdateMovie(int userId, MovieUpdateRequest request)
         {
-            var movieResponse = await GetMovie(userId, movieUpdateRequest.MovieName);
-
-            var documentModel = _mapperDocumentModel.ToDocumentModel(userId, movieResponse, movieUpdateRequest);
-
-            await _movieRankDocumentModelRepository.UpdateMovie(documentModel);
+            await _movieRankDocumentModelRepository.UpdateMovie(userId, request);
         }
 
         public async Task<MovieRankResponse> GetMovieRank(string movieName)
         {
             var response = await _movieRankDocumentModelRepository.GetMovieRank(movieName);
 
-            var overallMovieRanking = Math.Round(response.Select(r => r["Ranking"].AsInt()).Average());
+            var overallMovieRanking = Math.Round(response.Items.Select(item => Convert.ToInt32(item["Ranking"].N)).Average());
 
             return new MovieRankResponse
             {

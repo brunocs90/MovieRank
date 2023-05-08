@@ -1,20 +1,25 @@
-﻿using Amazon.DynamoDBv2.DocumentModel;
+﻿using Amazon.DynamoDBv2.Model;
+using MovieRank.Contracts;
 
 namespace MovieRank.Libs.Repositories.LowLevelModel
 {
     public interface IMovieRankLowLevelModelRepository
     {
-        Task<IEnumerable<Document>> GetAllItems();
+        Task<ScanResponse> GetAllItems();
 
-        Task<Document> GetMovie(int userId, string movieName);
+        Task<GetItemResponse> GetMovie(int userId, string movieName);
 
-        Task<IEnumerable<Document>> GetUsersRankedMoviesByMovieTitle(int userId, string movieName);
+        Task<QueryResponse> GetUsersRankedMoviesByMovieTitle(int userId, string movieName);
 
-        Task AddMovie(Document documentModel);
+        Task AddMovie(int userId, MovieRankRequest movieRankRequest);
 
-        Task UpdateMovie(Document documentModel);
+        Task UpdateMovie(int userId, MovieUpdateRequest updateRequest);
 
-        Task<IEnumerable<Document>> GetMovieRank(string movieName);
+        Task<QueryResponse> GetMovieRank(string movieName);
+
+        Task CreateDynamoTable(string tableName);
+
+        Task DeleteDynamoDbTable(string tableName);
 
     }
 }

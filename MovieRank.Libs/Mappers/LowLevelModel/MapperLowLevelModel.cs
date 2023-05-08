@@ -1,50 +1,41 @@
-﻿using Amazon.DynamoDBv2.DocumentModel;
+﻿using Amazon.DynamoDBv2.Model;
 using MovieRank.Contracts;
 
 namespace MovieRank.Libs.Mappers.LowLevelModel
 {
     public class MapperLowLevelModel : IMapperLowLevelModel
     {
-        public IEnumerable<MovieResponse> ToMovieContract(IEnumerable<Document> items)
+        public IEnumerable<MovieResponse> ToMovieContract(ScanResponse response)
         {
-            return items.Select(ToMovieContract);
+            return response.Items.Select(ToMovieContract);
         }
 
-        public MovieResponse ToMovieContract(Document item)
+        public IEnumerable<MovieResponse> ToMovieContract(QueryResponse response)
+        {
+            return response.Items.Select(ToMovieContract);
+        }
+
+        private MovieResponse ToMovieContract(Dictionary<string, AttributeValue> item)
         {
             return new MovieResponse
             {
-                MovieName = item["MovieName"],
-                Description = item["Description"],
-                Actors = item["Actors"].AsListOfString(),
-                Ranking = Convert.ToInt32(item["Ranking"]),
-                TimeRanked = item["RankedDateTime"],
+                MovieName = item["MovieName"].S,
+                Description = item["Description"].S,
+                Actors = item["Actors"].SS,
+                Ranking = Convert.ToInt32(item["Ranking"].N),
+                TimeRanked = item["RankedDateTime"].S
             };
         }
 
-        public Document ToDocumentModel(int userId, MovieRankRequest addRequest)
+        public MovieResponse ToMovieContract(GetItemResponse response)
         {
-            return new Document
+            return new MovieResponse
             {
-                ["UserId"] = userId,
-                ["MovieName"] = addRequest.MovieName,
-                ["Description"] = addRequest.Description,
-                ["Actors"] = addRequest.Actors,
-                ["RankedDateTime"] = DateTime.UtcNow.ToString(),
-                ["Ranking"] = addRequest.Ranking
-            };
-        }
-
-        public Document ToDocumentModel(int userId, MovieResponse movieResponse, MovieUpdateRequest movieUpdateRequest)
-        {
-            return new Document
-            {
-                ["UserId"] = userId,
-                ["MovieName"] = movieResponse.MovieName,
-                ["Description"] = movieResponse.Description,
-                ["Actors"] = movieResponse.Actors,
-                ["Ranking"] = movieUpdateRequest.Ranking,
-                ["RankedDateTime"] = DateTime.UtcNow.ToString(),
+                MovieName = response.Item["MovieName"].S,
+                Description = response.Item["Description"].S,
+                Actors = response.Item["Actors"].SS,
+                Ranking = Convert.ToInt32(response.Item["Ranking"].N),
+                TimeRanked = response.Item["RankedDateTime"].S
             };
         }
     }
