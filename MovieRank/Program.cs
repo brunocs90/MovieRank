@@ -15,7 +15,7 @@ builder.Services.AddControllers();
 // Load configuration
 var configuration = new ConfigurationBuilder()
     .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.json", optional: true)
+    .AddJsonFile("appsettings.Development.json", optional: true)
     .Build();
 
 // Configure AWS services
