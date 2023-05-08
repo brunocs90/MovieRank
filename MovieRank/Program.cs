@@ -1,6 +1,4 @@
-using Amazon;
-using Amazon.DynamoDBv2;
-using Amazon.Extensions.NETCore.Setup;
+using MovieRank;
 using MovieRank.Libs.Mappers.DocumentModel;
 using MovieRank.Libs.Mappers.ObjectPersistenceModel;
 using MovieRank.Libs.Repositories.DocumentModel;
@@ -14,23 +12,26 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddAWSService<IAmazonDynamoDB>();
-builder.Services.AddDefaultAWSOptions(
-    new AWSOptions
-    {
-        Region = RegionEndpoint.GetBySystemName("us-west-2")
-    });
+// Load configuration
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", optional: true)
+    .Build();
 
-///ObjectPersistenceModel
+// Configure AWS services
+AwsServiceConfiguration.ConfigureAwsServices(builder.Services, configuration);
+
+
+// Register Services 
+// ObjectPersistenceModel
 builder.Services.AddSingleton<IMovieRankObjectPersistenceModelService, MovieRankObjectPersistenceModelService>();
 builder.Services.AddSingleton<IMovieRankObjectPersistenceModelRepository, MovieRankObjectPersistenceModelRepository>();
 builder.Services.AddSingleton<IMapperObjectPersistenceModel, MapperObjectPersistenceModel>();
 
-///DocumentModel
+// DocumentModel
 builder.Services.AddSingleton<IMovieRankDocumentModelService, MovieRankDocumentModelService>();
 builder.Services.AddSingleton<IMovieRankDocumentModelRepository, MovieRankDocumentModelRepository>();
 builder.Services.AddSingleton<IMapperDocumentModel, MapperDocumentModel>();
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
