@@ -14,7 +14,7 @@ namespace MovieRank.Integration.Tests.Setup
         {
             var request = new CreateTableRequest
             {
-                AttributeDefinitions = new List<AttributeDefinition>()
+                AttributeDefinitions = new List<AttributeDefinition>
                 {
                     new AttributeDefinition
                     {
@@ -46,7 +46,6 @@ namespace MovieRank.Integration.Tests.Setup
                     WriteCapacityUnits = 1
                 },
                 TableName = "MovieRank",
-
                 GlobalSecondaryIndexes = new List<GlobalSecondaryIndex>
                 {
                     new GlobalSecondaryIndex
@@ -67,7 +66,7 @@ namespace MovieRank.Integration.Tests.Setup
                         },
                         Projection = new Projection
                         {
-                            ProjectionType = "ALL"
+                            ProjectionType = ProjectionType.ALL
                         }
                     }
                 }
@@ -82,7 +81,7 @@ namespace MovieRank.Integration.Tests.Setup
             string? status = null;
             do
             {
-                Thread.Sleep(1000);
+                await Task.Delay(1000);
                 try
                 {
                     status = await GetTableStatus(tableName);
@@ -92,8 +91,7 @@ namespace MovieRank.Integration.Tests.Setup
                     // DescribeTable is eventually consistent. So you might
                     // get resource not found. So we handle the potential exception.
                 }
-
-            } while (status != "ACTIVE");
+            } while (status != TableStatus.ACTIVE);
         }
 
         private static async Task<string> GetTableStatus(string tableName)

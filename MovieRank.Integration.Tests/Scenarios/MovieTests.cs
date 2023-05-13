@@ -12,6 +12,7 @@ namespace MovieRank.Integration.Tests.Scenarios
     public class MovieTests : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         readonly HttpClient _client;
+        private readonly string DEFAULT_ROUTE = "moviesObjectPersistenceModel";
 
         public MovieTests(CustomWebApplicationFactory<Program> factory)
         {
@@ -21,53 +22,55 @@ namespace MovieRank.Integration.Tests.Scenarios
         [Fact]
         public async Task AddMovieRankDataReturnsOkStatus()
         {
+            // Arrange
             const int userId = 1;
 
+            // Act
             var response = await AddMovieRankData(userId);
 
+            // Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
-        public async Task GetAllItemsFromDatabaseReturnsNotNullMoiveResponse()
+        public async Task GetAllItemsFromDatabaseReturnsNotNullMovieResponse()
         {
+            // Arrange
             const int userId = 2;
 
             await AddMovieRankData(userId);
 
-            var response = await _client.GetAsync("moviesObjectPersistenceModel");
+            // Act
+            var response = await _client.GetAsync(DEFAULT_ROUTE);
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<MovieResponse[]>(content);
 
-            MovieResponse[] result;
-            using (var content = response.Content.ReadAsStringAsync())
-            {
-                result = JsonConvert.DeserializeObject<MovieResponse[]>(await content);
-            }
-
+            // Assert
             Assert.NotNull(result);
         }
 
         [Fact]
         public async Task GetMovieReturnsExpectedMovieName()
         {
+            // Arrange
             const int userId = 3;
             const string movieName = "Test-GetMovieBack";
 
             await AddMovieRankData(userId, movieName);
 
-            var response = await _client.GetAsync($"moviesObjectPersistenceModel/{userId}/{movieName}");
+            // Act
+            var response = await _client.GetAsync($"{DEFAULT_ROUTE}/{userId}/{movieName}");
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<MovieResponse>(content);
 
-            MovieResponse result;
-            using (var content = response.Content.ReadAsStringAsync())
-            {
-                result = JsonConvert.DeserializeObject<MovieResponse>(await content);
-            }
-
-            Assert.Equal(movieName, result.MovieName);
+            // Assert
+            Assert.Equal(movieName, result?.MovieName);
         }
 
         [Fact]
         public async Task UpdateMovieReturnsUpdatedMovieRankValue()
         {
+            // Arrange
             const int userId = 4;
             const string movieName = "Test-UpdateMovie";
             const int ranking = 10;
@@ -83,35 +86,30 @@ namespace MovieRank.Integration.Tests.Scenarios
             var json = JsonConvert.SerializeObject(updateMovie);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            await _client.PatchAsync($"moviesObjectPersistenceModel/{userId}", stringContent);
+            // Act
+            await _client.PatchAsync($"{DEFAULT_ROUTE}/{userId}", stringContent);
+            var response = await _client.GetAsync($"{DEFAULT_ROUTE}/{userId}/{movieName}");
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<MovieResponse>(content);
 
-            var response = await _client.GetAsync($"moviesObjectPersistenceModel/{userId}/{movieName}");
-
-            MovieResponse result;
-            using (var content = response.Content.ReadAsStringAsync())
-            {
-                result = JsonConvert.DeserializeObject<MovieResponse>(await content);
-            }
-
-            Assert.Equal(ranking, result.Ranking);
+            // Assert
+            Assert.Equal(ranking, result?.Ranking);
         }
 
         [Fact]
         public async Task GetMoviesRankingReturnsAnOverallMovieRanking()
         {
+            // Arrange
             const int userId = 5;
             const string movieName = "Test-GetMovieOverallRanking";
-
             await AddMovieRankData(userId, movieName);
 
-            var response = await _client.GetAsync($"moviesObjectPersistenceModel/{movieName}/ranking");
+            // Act
+            var response = await _client.GetAsync($"{DEFAULT_ROUTE}/{movieName}/ranking");
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<MovieRankResponse>(content);
 
-            MovieRankResponse result;
-            using (var content = response.Content.ReadAsStringAsync())
-            {
-                result = JsonConvert.DeserializeObject<MovieRankResponse>(await content);
-            }
-
+            // Assert
             Assert.NotNull(result);
         }
 
@@ -134,7 +132,7 @@ namespace MovieRank.Integration.Tests.Scenarios
             var json = JsonConvert.SerializeObject(movieDbData);
             var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            return await _client.PostAsync($"moviesObjectPersistenceModel/{testUserId}", stringContent);
+            return await _client.PostAsync($"{DEFAULT_ROUTE}/{testUserId}", stringContent);
         }
     }
 }

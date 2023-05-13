@@ -8,7 +8,7 @@ namespace MovieRank.Integration.Tests.Setup
     {
         private readonly DockerClient _dockerClient;
         private const string ContainerImageUri = "amazon/dynamodb-local";
-        private string _containerId;
+        private string? _containerId;
 
         public TestContext()
         {
@@ -18,45 +18,41 @@ namespace MovieRank.Integration.Tests.Setup
         public async Task InitializeAsync()
         {
             await PullImage();
-
             await StartContainer();
-
             await TestDataSetup.CreateTable();
         }
 
         private async Task PullImage()
         {
-            await _dockerClient.Images
-                .CreateImageAsync(new ImagesCreateParameters
-                {
-                    FromImage = ContainerImageUri,
-                    Tag = "latest"
-                },
-                    new AuthConfig(),
-                    new Progress<JSONMessage>());
+            var parameters = new ImagesCreateParameters
+            {
+                FromImage = ContainerImageUri,
+                Tag = "latest"
+            };
+
+            await _dockerClient.Images.CreateImageAsync(parameters, new AuthConfig(), new Progress<JSONMessage>());
         }
 
         private async Task StartContainer()
         {
-            var response = await _dockerClient.Containers.CreateContainerAsync(new CreateContainerParameters
+            var parameters = new CreateContainerParameters
             {
                 Image = ContainerImageUri,
                 ExposedPorts = new Dictionary<string, EmptyStruct>
                 {
-                    {
-                        "8000", default
-                    }
+                    { "8000", default }
                 },
                 HostConfig = new HostConfig
                 {
                     PortBindings = new Dictionary<string, IList<PortBinding>>
                     {
-                        {"8000", new List<PortBinding> {new PortBinding {HostPort = "8000"}}}
+                        { "8000", new List<PortBinding> { new PortBinding { HostPort = "8000" } } }
                     },
                     PublishAllPorts = true
                 }
-            });
+            };
 
+            var response = await _dockerClient.Containers.CreateContainerAsync(parameters);
             _containerId = response.ID;
 
             await _dockerClient.Containers.StartContainerAsync(_containerId, null);
