@@ -66,6 +66,8 @@ Json Example:
 
 When running the project, the RESTful API will be available for use at `http://localhost:5000` or `https://localhost:5001` (if enabled). The API endpoints are documented and can be accessed through Swagger at `http://localhost:5000/swagger/index.html`.
 
+**Note**: To run the unit tests locally, you will need Docker installed and running on your machine. The tests needs on a local DynamoDB instance that runs within a Docker container. Make sure Docker is up and running before executing the tests.
+
 ## 📁 Structure
 
 The project is divided into different layers:
