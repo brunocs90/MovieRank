@@ -4,7 +4,7 @@
 <p align="center">
   <a href="#-project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-settings">Settings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-setup">Setup</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-structure">Structure</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-license">License</a>
 </p>
@@ -36,7 +36,7 @@ This project was developed with the following technologies:
 - FluentAssertions: a library for writing more expressive tests in .NET.
 - AWS SDK for .NET: a library for interacting with AWS services on the .NET platform.
 
-## 📥 Settings
+## 📥 Setup
 
 To run this project, it is necessary to have an AWS account and configure your credentials in the `appsettings.json` file. In addition, it is necessary to have the .NET Core 6 SDK installed on your machine.
 
